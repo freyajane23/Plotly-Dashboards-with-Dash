@@ -1,0 +1,21 @@
+class Percent(float):
+  def __str__(self):
+    return '{:.2%}'.format(self)
+
+def trend_summary(econ_var,start_date,future_date):
+    date_format = '%m/%d/%Y'
+    dtObj = datetime.strptime(cutoff_date, date_format)
+    report_date = dtObj + relativedelta(months=1)+MonthEnd(0)
+    forecast_date = datetime.date(dtObj + relativedelta(months=27)+ MonthEnd(0))
+    past_date = datetime.date(dtObj - relativedelta(months=27)+ MonthEnd(0))
+    datedelta=econ_raw[econ_var][start_date:future_date].idxmax(axis = 0)-econ_raw[econ_var][start_date:future_date].idxmin(axis=0)
+    min_var=econ_raw[econ_var][start_date:future_date].min()
+    max_var=econ_raw[econ_var][start_date:future_date].max()
+    if datedelta > timedelta(days=1):
+        trend='Increase'
+        percent=Percent((max_var-min_var)/min_var)
+    else:
+        trend='Decrease'
+        percent=Percent((max_var-min_var)/max_var)
+#     print("Total students : %3d, Boys : %2d" % (240, 120))
+    return print("Econ_Senario:", econ_var,"Min:",min_var, "Max:",max_var, "Trend:",trend,"Percent Change:",percent)
